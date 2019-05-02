@@ -26,6 +26,11 @@
         </friction>
       </surface>
     </collision>
+
+    <inertial>
+    <mass value="5" />
+    <inertia ixx="0.004" ixy="0.001" ixz="0" iyy="0.006" iyz="0" izz="0.007" />
+    </inertial>
   </link>
 
   <joint name="caster_joint" type="fixed">

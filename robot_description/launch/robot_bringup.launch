@@ -9,4 +9,13 @@
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
     
     <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" output="screen" required="true" />
+
+    <include file="$(find gazebo_ros)/launch/empty_world.launch" />
+
+    <node name="urdf_spawner" 
+        pkg="gazebo_ros" 
+        type="spawn_model" 
+        respawn="false" 
+        output="screen"
+        args="-urdf -model robot -param robot_description"/> 
 </launch>

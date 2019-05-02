@@ -6,9 +6,18 @@
                 <origin xyz="0 0 0" rpy="0 0 0" />
                 <geometry>
                 <!-- TODO: parametrizar valores -->
-                <cylinder radius="0.1" length="0.05"/>
+                <cylinder radius="wheel['radius']" length="wheel['length']"/>
                 </geometry>
             </visual>
+            <collision>
+                <geometry>
+                <cylinder radius="wheel['radius']" length="wheel['length']"/>
+                </geometry>
+            </collision>
+            <inertial>
+            <mass value="5" />
+            <inertia ixx="0.004" ixy="0.001" ixz="0" iyy="0.006" iyz="0" izz="0.007" />
+            </inertial>
         </link>
 
         <joint name="$base_to_${lr}_wheel" type="continuous">

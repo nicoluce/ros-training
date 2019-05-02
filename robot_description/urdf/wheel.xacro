@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<robot name="wheel" xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:macro name="wheel" params="lr">
+        <link name="${lr}_wheel">
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                <!-- TODO: parametrizar valores -->
+                <cylinder radius="0.1" length="0.05"/>
+                </geometry>
+            </visual>
+        </link>
+
+        <joint name="$base_to_${lr}_wheel" type="continuous">
+            <parent link="back_${lr}_wheel_link"/>
+            <child link="${lr}_wheel"/>
+            <origin xyz="0 0 0" />
+        </joint>
+
+    </xacro:macro>
+</robot>

@@ -37,6 +37,7 @@
     <xacro:property name="caster" value = "${config['caster']}"/>
   </xacro:if>
 
+  <xacro:include filename="$(find robot_description)/urdf/robot.gazebo" />
   <xacro:include filename="$(find robot_description)/urdf/body.xacro" />
   <xacro:include filename="$(find robot_description)/urdf/wheel.xacro" />
   <xacro:include filename="$(find robot_description)/urdf/caster.xacro" />

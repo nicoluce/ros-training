@@ -17,5 +17,8 @@
         type="spawn_model" 
         respawn="false" 
         output="screen"
-        args="-urdf -model robot -param robot_description"/> 
+        args="-urdf -model robot -param robot_description"/>    
+    
+
+    <include file="$(find robot_navigation)/launch/robot_navigation.launch" />
 </launch>

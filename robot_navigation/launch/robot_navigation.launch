@@ -1,0 +1,12 @@
+<launch>
+    <rosparam command="load" file="$(find robot_navigation)/config/diff_control.yaml" ns="diff_drive_controller"/>
+    
+    <node name="rqt_steering" pkg="rqt_robot_steering" type="rqt_robot_steering" ns="diff_drive_controller"/>
+
+    <node name="controller_spawner_diff_drive"
+                pkg="controller_manager"
+                type="spawner"
+                respawn="false"
+                output="screen"
+                args="diff_drive_controller"/>
+</launch>

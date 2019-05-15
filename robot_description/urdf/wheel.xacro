@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot name="wheel" xmlns:xacro="http://www.ros.org/wiki/xacro">
   <xacro:macro name="wheel" params="lr flip">
-    <link name="${lr}_wheel">
+    <link name="${lr}_wheel_link">
       <visual>
         <origin xyz="0 0 0" rpy="${M_PI_2} 0 0" />
         <geometry>
@@ -22,7 +22,7 @@
       </inertial>
     </link>
 
-    <gazebo reference="${lr}_wheel">
+    <gazebo reference="${lr}_wheel_link">
       <mu1 value="0.01"/>
       <mu2 value="1.0"/>
       <kp  value="10000000.0"/>
@@ -33,14 +33,38 @@
       <turnGravityOff>false</turnGravityOff>
     </gazebo>
 
-    <joint name="$base_to_${lr}_wheel" type="continuous">
+    <joint name="${lr}_wheel_joint" type="continuous">
       <parent link="base_link"/>
-      <child link="${lr}_wheel"/>
+      <child link="${lr}_wheel_link"/>
       <origin xyz="0 ${flip * (body['width']/2 + wheel['length']/2)} 0" rpy="0 0 0"/>
       <axis xyz="0 1 0" />
       <limit effort="100000000" velocity="2"/>
       <joint_properties damping="0.0" friction="0.0"/>
     </joint>
+
+    <!-- Orientation transmission for the steering -->
+    <!-- <transmission name="${lr}_wheel_joint_pos_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+        <joint name="${lr}_wheel_joint">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="${lr}_wheel_joint_motor">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission> -->
+    
+    <!-- Wheel velocity transmission -->
+    <transmission name="${lr}_wheel_joint_vel_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+        <joint name="${lr}_wheel_joint">
+            <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="${lr}_wheel_joint_motor">
+            <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
 
   </xacro:macro>
 </robot>

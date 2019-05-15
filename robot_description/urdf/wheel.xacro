@@ -1,30 +1,46 @@
 <?xml version="1.0"?>
 <robot name="wheel" xmlns:xacro="http://www.ros.org/wiki/xacro">
-    <xacro:macro name="wheel" params="lr">
-        <link name="${lr}_wheel">
-            <visual>
-                <origin xyz="0 0 0" rpy="0 0 0" />
-                <geometry>
-                <!-- TODO: parametrizar valores -->
-                <cylinder radius="wheel['radius']" length="wheel['length']"/>
-                </geometry>
-            </visual>
-            <collision>
-                <geometry>
-                <cylinder radius="wheel['radius']" length="wheel['length']"/>
-                </geometry>
-            </collision>
-            <inertial>
-            <mass value="5" />
-            <inertia ixx="0.004" ixy="0.001" ixz="0" iyy="0.006" iyz="0" izz="0.007" />
-            </inertial>
-        </link>
+  <xacro:macro name="wheel" params="lr flip">
+    <link name="${lr}_wheel">
+      <visual>
+        <origin xyz="0 0 0" rpy="${M_PI_2} 0 0" />
+        <geometry>
+        <!-- TODO: parametrizar valores -->
+        <cylinder radius="${wheel['radius']}" length="${wheel['length']}"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="${M_PI_2} 0 0" />
+        <geometry>
+        <cylinder radius="${wheel['radius']}" length="${wheel['length']}"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin xyz="0 0 0" rpy="${M_PI_2} 0 0" />
+        <mass value="1" />
+        <cylinder_inertia m="1" r="${wheel['radius']}" h="${wheel['length']}" />
+      </inertial>
+    </link>
 
-        <joint name="$base_to_${lr}_wheel" type="continuous">
-            <parent link="back_${lr}_wheel_link"/>
-            <child link="${lr}_wheel"/>
-            <origin xyz="0 0 0" />
-        </joint>
+    <gazebo reference="${lr}_wheel">
+      <mu1 value="0.01"/>
+      <mu2 value="1.0"/>
+      <kp  value="10000000.0"/>
+      <kd  value="1.0" />
+      <fdir1 value="1 0 0"/>
+      <minDepth value="0.001"/>
+      <material>Gazebo/Grey</material>
+      <turnGravityOff>false</turnGravityOff>
+    </gazebo>
 
-    </xacro:macro>
+    <joint name="$base_to_${lr}_wheel" type="continuous">
+      <parent link="base_link"/>
+      <child link="${lr}_wheel"/>
+      <origin xyz="0 ${flip * (body['width']/2 + wheel['length']/2)} 0" rpy="0 0 0"/>
+      <axis xyz="0 1 0" />
+      <limit effort="100000000" velocity="2"/>
+      <joint_properties damping="0.0" friction="0.0"/>
+    </joint>
+
+  </xacro:macro>
 </robot>

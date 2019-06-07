@@ -42,13 +42,6 @@
   <xacro:include filename="$(find robot_description)/urdf/wheel.xacro" />
   <xacro:include filename="$(find robot_description)/urdf/caster.xacro" />
 
-  <link name="base_link">
-  </link>
-  <gazebo reference="base_link">
-    <material>Gazebo/Yellow</material>
-    <turnGravityOff>false</turnGravityOff>
-  </gazebo>
-
   <body/>
 
   <caster/>

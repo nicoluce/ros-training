@@ -5,9 +5,11 @@ body:
   length: 0.4
 
 wheel:
+  mass: 5
   radius: 0.1
   length: 0.05
 
 caster:
-  radius: 0.05
+  mass: 1
+  radius: 0.048
   

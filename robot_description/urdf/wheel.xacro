@@ -5,7 +5,6 @@
       <visual>
         <origin xyz="0 0 0" rpy="${M_PI_2} 0 0" />
         <geometry>
-        <!-- TODO: parametrizar valores -->
         <cylinder radius="${wheel['radius']}" length="${wheel['length']}"/>
         </geometry>
       </visual>
@@ -17,17 +16,17 @@
       </collision>
       <inertial>
         <origin xyz="0 0 0" rpy="${M_PI_2} 0 0" />
-        <mass value="1" />
-        <cylinder_inertia m="1" r="${wheel['radius']}" h="${wheel['length']}" />
+        <mass value="${wheel['mass']}" />
+        <cylinder_inertia m="${wheel['mass']}" r="${wheel['radius']}" h="${wheel['length']}" />
       </inertial>
     </link>
 
     <gazebo reference="${lr}_wheel_link">
-      <mu1 value="0.01"/>
-      <mu2 value="1.0"/>
-      <kp  value="10000000.0"/>
+      <mu1 value="50000000.0"/>
+      <mu2 value="10.0"/>
+      <kp  value="1000000000.0"/>
       <kd  value="1.0" />
-      <fdir1 value="1 0 0"/>
+      <fdir1 value="0 0 1"/>
       <minDepth value="0.001"/>
       <material>Gazebo/Grey</material>
       <turnGravityOff>false</turnGravityOff>
@@ -36,23 +35,10 @@
     <joint name="${lr}_wheel_joint" type="continuous">
       <parent link="base_link"/>
       <child link="${lr}_wheel_link"/>
-      <origin xyz="0 ${flip * (body['width']/2 + wheel['length']/2)} 0" rpy="0 0 0"/>
+      <origin xyz="0.02 ${flip * (body['width']/2 + wheel['length']/2)} 0" rpy="0 0 0"/>
       <axis xyz="0 1 0" />
-      <limit effort="100000000" velocity="2"/>
-      <joint_properties damping="0.0" friction="0.0"/>
+      <limit effort="5000000000" velocity="10"/>
     </joint>
-
-    <!-- Orientation transmission for the steering -->
-    <!-- <transmission name="${lr}_wheel_joint_pos_trans">
-    <type>transmission_interface/SimpleTransmission</type>
-        <joint name="${lr}_wheel_joint">
-            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-        </joint>
-        <actuator name="${lr}_wheel_joint_motor">
-            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-            <mechanicalReduction>1</mechanicalReduction>
-        </actuator>
-    </transmission> -->
     
     <!-- Wheel velocity transmission -->
     <transmission name="${lr}_wheel_joint_vel_trans">

@@ -7,4 +7,4 @@
 - [x] Ask someone about tricycle controller integration
 - [ ] Integrate trycicle controller
     - [x] Forward/Backwards movement
-    - [ ] Turning
+    - [x] Turning
